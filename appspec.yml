@@ -1,0 +1,17 @@
+version: 0.0
+os: linux 
+files:
+  - source: codedeploy/test.file
+    destination: /tmp/
+hooks:
+  BeforeInstall:
+    - location: codedeploy/install_dependencies.sh
+      runas: root
+  AfterInstall:
+    - location: codedeploy/npm_install.sh 
+      timeout: 180
+      runas: root
+  ApplicationStart:
+    - location: codedeploy/npm_start.sh
+      timeout: 30
+      runas: ec2-user
